@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: gold;
+    font-family: tahoma;
+}
+
+/* ============================= */
+/* === Projects page styling === */
+/* ============================= */
+
+main h2, p {
+    margin-bottom: .4em;
+}
+
+main h2 {
+    font-size: 2em;
+}
+
+main ul {
+    display: grid;
+    max-width: 70%;
+    margin: auto;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5em;
+
+    list-style: none;
+    justify-items: center;
+}
+
+main li {
+    background-color: white;
+    padding: 1em;
+    border-radius: .5em;
+    outline: solid black .3em;
+    box-shadow: .5em .5em 0 black;
+    height: auto;
+}
+
+main a {
+    color: black;
+    border: solid black .3em;
+    border-radius: .4em;
+    padding: .5em;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+main a:hover {
+    text-decoration: underline;
+    color: white;
+    background-color: black;
+}
