@@ -1,57 +1,357 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --title: blue;
+    --bg: black;
+    --color: white;
 }
 
 body {
-    background-color: gold;
-    font-family: tahoma;
+    font-family: 'mono-space', 'Courier New', Courier, monospace;
+
+    background-color: var(--bg);
+    color: var(--color);
 }
 
-/* ============================= */
-/* === Projects page styling === */
-/* ============================= */
+/* ===================== */
+/* ==[ Title screen ]=== */
+/* ===================== */
 
-main h2, p {
-    margin-bottom: .4em;
+main,
+section:first-of-type {
+    height: 100vh;
 }
 
-main h2 {
-    font-size: 2em;
+main {
+    position: relative;
+
+    &:has(#animations:checked) {
+        section:first-of-type {
+            animation: none;
+
+            h1, h1::before, p {
+                animation: none;
+            }
+        }
+    }
+
+    &:has(#options:checked) div {
+        top: 0;
+    }
 }
 
-main ul {
-    display: grid;
-    max-width: 70%;
-    margin: auto;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5em;
+main div {
+    position: fixed;
+    z-index: 1;
+    top: -12%;
+    transition: 1s;
 
-    list-style: none;
-    justify-items: center;
+    > label {
+        margin-left: 1em;
+    }
 }
 
-main li {
-    background-color: white;
+form {
+
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
     padding: 1em;
-    border-radius: .5em;
-    outline: solid black .3em;
-    box-shadow: .5em .5em 0 black;
-    height: auto;
+    background-color: #141414;
 }
 
-main a {
-    color: black;
-    border: solid black .3em;
-    border-radius: .4em;
-    padding: .5em;
-    display: block;
-    text-align: center;
-    text-decoration: none;
+section:first-of-type {
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    animation: stars 20s linear infinite;
+
+    h1 {
+        font-family: 'Press Start 2P', system-ui;
+        font-size: min(max(7vw, 2em), 7em);
+        text-transform: uppercase;
+        text-align: center;
+        align-self: end;
+        /* overflow: hidden; */
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        mix-blend-mode: screen;
+
+        color: var(--title);
+        animation: 
+            tracking 5s both linear, 
+            title-hue 15s infinite 5s linear;
+
+        /* star shine */
+        &::before {
+            content: '';
+
+            scale: 0;
+            position: absolute;
+            width: 2em;
+            aspect-ratio: 1;
+            top: -1em;
+            background-image: 
+                radial-gradient(circle at top left, black 40%, white 40%),
+                radial-gradient(circle at top right, black 40%, white 40%),
+                radial-gradient(circle at bottom left, black 40%, white 40%),
+                radial-gradient(circle at bottom right, black 40%, white 40%);
+
+            background-blend-mode: multiply;
+            animation: 
+                shine-right 10s linear infinite,
+                scale-rotate 2s step-end infinite;
+
+            mix-blend-mode: screen;
+
+            animation-delay: 5s;
+        }
+
+        /* scanline */
+        &::after {
+            content: '';
+
+            position: absolute;
+
+            width: 100%;
+            height: .1em;
+            transform-origin: center;
+            background-color: transparent;
+            mix-blend-mode: screen;
+
+            /* animation: scanline .5s linear 5s both; */
+        }
+    }
+
+    span {
+        font-size: 50%;
+    }
+
+    p:first-of-type {
+        align-self: start;
+        padding-top: 1em;
+        animation: 
+            appear 1s both 6s,
+            breathe 1s linear 7s infinite alternate;
+    }
+
+    /* stars
+    ------------------------------------- */
+    --gradient-size-small: 1px;
+    --gradient-size-medium: 2px;
+    --gradient-size-big: 6px;
+    --color-1: red;
+    --color-2: blue;
+    --color-3: lightblue;
+
+    background-image:
+        radial-gradient(circle at 5% 30%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 15% 55%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 25% 85%, var(--color-1) var(--gradient-size-medium),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 35% 65%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 45% 35%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 55% 95%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 65% 15%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 75% 75%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 85% 85%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 95% 55%, var(--color-1) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        
+        radial-gradient(circle at 2% 62%, var(--color-2) var(--gradient-size-medium),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 12% 12%, var(--color-3) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 22% 42%, var(--color-2) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 32% 22%, var(--color-3) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 42% 72%, var(--color-2) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 52% 32%, var(--color-3) var(--gradient-size-medium),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 62% 82%, var(--color-2) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 72% 42%, var(--color-3) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 82% 22%, var(--color-2) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        radial-gradient(circle at 92% 72%, var(--color-3) var(--gradient-size-small),#0000 var(--gradient-size-small)),
+        linear-gradient(to top, black 10em, rgb(21, 3, 27));
+    
+    background-position: center center;
 }
 
-main a:hover {
-    text-decoration: underline;
-    color: white;
-    background-color: black;
+@keyframes tracking {
+    0% {
+        letter-spacing: 20em;
+        opacity: 0;
+        color: inherit;
+    }
+
+    20% {
+        letter-spacing: 20em;
+        opacity: 1;
+        color: inherit;
+    }
+
+    40% {
+        letter-spacing: 10em;
+        color: inherit;
+    }
+
+    70% {
+        letter-spacing: 0;
+        color: inherit;
+        text-shadow: none;
+    }
+
+    70.1% {
+        color: red;
+        text-shadow: 0 0 1em;
+    }
+
+    100% {
+
+    }
+}
+
+@keyframes title-hue {
+    0% {
+        filter: hue-rotate(0deg) brightness(2);
+        text-shadow: 
+            0 0 1em,
+            .1em 0 0 #ff00ff,
+            -.1em 0 0 #ff00ff;
+    }
+
+    10% {
+        filter: hue-rotate(720deg);
+        text-shadow: none;
+    }
+
+    100% {
+        filter: hue-rotate(720deg);
+        text-shadow: none;
+    }
+}
+
+/* star animation */
+@keyframes shine-right {
+    0% {
+        transform: scale(0);
+    }
+
+    2.5% {
+        transform: scale(.5);
+    }
+
+    3% {
+        left: 0;
+    }
+
+    20% {
+        left: 80%;
+    }
+
+    21% {
+        transform: scale(.5);
+    }
+
+    25% {
+        left: 80%;
+        transform: scale(0);
+    }
+
+    100% {
+        left: 80%;
+        transform: scale(0);
+    }
+}
+
+@keyframes scale-rotate {
+    0% {
+        scale: 1;
+        rotate: 0deg;
+    }
+
+    25% {
+        scale: 2;
+        rotate: 45deg;
+    }
+
+    50% {
+        scale: 1;
+        rotate: 90deg;
+    }
+
+    75% {
+        scale: 2;
+        rotate: 135deg;
+    }
+
+    100% {
+        scale: 1;
+        rotate: 180deg;
+    }
+}
+
+@keyframes scanline {
+    0% {
+        top: -10%;
+        transform: scaleY(1);
+        background-color: transparent;
+    }
+
+    1% {
+        top: -10%;
+        transform: scaleY(1);
+        background-color: white;
+    }
+
+    99% {
+        top: 90%;
+        transform: scaleY(1);
+        background-color: white;
+    }
+
+    100% {
+        top: 90%;
+        transform: scaleY(1);
+        background-color: transparent;
+    }
+}
+
+/* subtitle animations */
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes breathe {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .5;
+    }
+}
+
+/* background animation */
+@keyframes stars {
+    from {
+        background-position: 0;
+    }
+    to {
+        background-position: 100vw;
+    }
+}
+
+/* ================= */
+/* ==[ Section 2 ]== */
+/* ================= */
+section:nth-of-type(2) {
+    background-color: peru;
 }
