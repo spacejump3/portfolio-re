@@ -6,22 +6,73 @@
 
 :root {
     --title: blue;
-    --bg: black;
+    --bg: rgb(0, 0, 0);
     --color: white;
+    --grey: grey;
+
+    --haze: rgb(34, 7, 43);
+}
+
+h1, h2, h3 {
+    font-family: 'Press Start 2P', system-ui;
+}
+
+p {
+    font-size: 1.2em;
+    color: var(--grey);
 }
 
 body {
-    font-family: 'mono-space', 'Courier New', Courier, monospace;
+    font-family: monospace;
 
     background-color: var(--bg);
     color: var(--color);
+}
+
+/* Accesibility options */
+
+details {
+    background-color: rgb(36, 36, 36);
+    z-index: 1;
+    position: fixed;
+    display: inline;
+    width: max-content;
+    margin: 1em;
+    color: var(--grey);
+
+    summary {
+        background-color: #343434;
+        padding: .4em;
+
+        &:hover {
+            cursor: pointer;
+            color: var(--color);
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        color: var(--color);
+
+        label {
+            padding: .4em;
+        }
+
+        label:hover {
+            background-color: rgb(59, 59, 59);
+        }
+    }
+}
+
+#options-btn:checked .options {
+    top: 0;
 }
 
 /* ===================== */
 /* ==[ Title screen ]=== */
 /* ===================== */
 
-main,
 section:first-of-type {
     height: 100vh;
 }
@@ -38,30 +89,6 @@ main {
             }
         }
     }
-
-    &:has(#options:checked) div {
-        top: 0;
-    }
-}
-
-main div {
-    position: fixed;
-    z-index: 1;
-    top: -12%;
-    transition: 1s;
-
-    > label {
-        margin-left: 1em;
-    }
-}
-
-form {
-
-    display: flex;
-    flex-direction: column;
-    margin: 1em;
-    padding: 1em;
-    background-color: #141414;
 }
 
 section:first-of-type {
@@ -69,16 +96,17 @@ section:first-of-type {
     place-items: center;
     position: relative;
     overflow: hidden;
+    gap: 1em;
     animation: stars 20s linear infinite;
 
     h1 {
-        font-family: 'Press Start 2P', system-ui;
         font-size: min(max(7vw, 2em), 7em);
         text-transform: uppercase;
         text-align: center;
         align-self: end;
         /* overflow: hidden; */
-        position: relative;
+        /* position: absolute; */
+        grid-row: 1;
 
         display: flex;
         flex-direction: column;
@@ -114,8 +142,33 @@ section:first-of-type {
             animation-delay: 5s;
         }
 
+        /* &::after {
+            content: '';
+
+            scale: 0;
+            position: absolute;
+            width: 2em;
+            aspect-ratio: 1;
+            bottom: -1em;
+            background-image: 
+                radial-gradient(circle at top left, black 40%, white 40%),
+                radial-gradient(circle at top right, black 40%, white 40%),
+                radial-gradient(circle at bottom left, black 40%, white 40%),
+                radial-gradient(circle at bottom right, black 40%, white 40%);
+
+            background-blend-mode: multiply;
+            animation: 
+                shine-right 10s linear infinite,
+                scale-rotate 2s step-end infinite;
+
+            animation-direction: reverse;
+            mix-blend-mode: screen;
+
+            animation-delay: 5s;
+        } */
+
         /* scanline */
-        &::after {
+        /* &::after {
             content: '';
 
             position: absolute;
@@ -126,8 +179,8 @@ section:first-of-type {
             background-color: transparent;
             mix-blend-mode: screen;
 
-            /* animation: scanline .5s linear 5s both; */
-        }
+            animation: scanline .5s linear 5s both;
+        } */
     }
 
     span {
@@ -136,7 +189,7 @@ section:first-of-type {
 
     p:first-of-type {
         align-self: start;
-        padding-top: 1em;
+        grid-row: 2;
         animation: 
             appear 1s both 6s,
             breathe 1s linear 7s infinite alternate;
@@ -173,7 +226,7 @@ section:first-of-type {
         radial-gradient(circle at 72% 42%, var(--color-3) var(--gradient-size-small),#0000 var(--gradient-size-small)),
         radial-gradient(circle at 82% 22%, var(--color-2) var(--gradient-size-small),#0000 var(--gradient-size-small)),
         radial-gradient(circle at 92% 72%, var(--color-3) var(--gradient-size-small),#0000 var(--gradient-size-small)),
-        linear-gradient(to top, black 10em, rgb(21, 3, 27));
+        linear-gradient(to top, var(--bg) 10em, var(--haze));
     
     background-position: center center;
 }
@@ -188,11 +241,6 @@ section:first-of-type {
     20% {
         letter-spacing: 20em;
         opacity: 1;
-        color: inherit;
-    }
-
-    40% {
-        letter-spacing: 10em;
         color: inherit;
     }
 
@@ -352,6 +400,87 @@ section:first-of-type {
 /* ================= */
 /* ==[ Section 2 ]== */
 /* ================= */
+
 section:nth-of-type(2) {
-    background-color: peru;
+    background-color: #181818;
+    /* background-image: linear-gradient(var(--bg) 10%, var(--haze) 40%); */
+    background-image: linear-gradient(rgb(0, 0, 0), #181818 10%);
+    padding: 2em;
+
+    div {
+        max-width: 30em;
+        margin: auto;
+    }
+}
+
+ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
+    gap: 1em;
+    list-style: none;
+    margin-top: 1em;
+    text-align: start;
+
+    /* portfolio items */
+    li {
+        aspect-ratio: 1;
+        /* border-bottom: solid 1px grey; */
+        box-shadow: inset 0 -1px 0 grey;
+        transition: .1s;
+
+        h3 {
+            font-size: 1em;
+            transition: .1s;
+            margin: .4em 0;
+        }
+
+        img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            height: 100%;
+            display: block;
+            
+            &:focus {
+                outline: none;
+            }
+        }
+
+        /* hover state */
+        &:has(a:hover), &:has(a:focus-visible) {
+            --hover-color: yellow;
+            /* border-bottom: solid 5px var(--hover-color); */
+            box-shadow: inset 0 -5px 0 var(--hover-color);
+            animation: rainbow 2s infinite linear;
+
+            h3 {
+                color: var(--hover-color);
+                text-decoration: underline;
+                font-size: 1.2em;
+                text-shadow: 0 0 1em var(--hover-color);
+
+                &:after {
+                    content: ' >';
+                }
+            }
+        }
+
+        /* focus state */
+        &:has(a:focus-visible) {
+            --focus-color: #ff000051;
+            outline: solid 2px var(--focus-color);
+            background-color: var(--focus-color);
+        }
+    }
+}
+
+@keyframes rainbow {
+    to {
+        filter: hue-rotate(360deg);
+    }
 }
