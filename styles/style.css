@@ -36,6 +36,7 @@ details {
     z-index: 1;
     position: fixed;
     display: inline;
+    right: 0;
     width: max-content;
     margin: 1em;
     color: var(--grey);
@@ -67,6 +68,37 @@ details {
 
 #options-btn:checked .options {
     top: 0;
+}
+
+/* =============== */
+/* ==[ Header ]=== */
+/* =============== */
+
+header {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    font-size: 1.5em;
+
+    .currentPage {
+        text-decoration: underline;
+    }
+
+    ul {
+        list-style: none;
+        padding: 1em;
+        display: flex;
+        gap: 1em;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+
+        &:hover {
+            color: blue;
+        }
+    }
 }
 
 /* ===================== */
@@ -413,7 +445,7 @@ section:nth-of-type(2) {
     }
 }
 
-ul {
+section ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
     gap: 1em;
@@ -438,6 +470,8 @@ ul {
             width: 100%;
             height: 70%;
             object-fit: cover;
+
+            transition: .1s;
         }
 
         a {
@@ -456,7 +490,7 @@ ul {
             --hover-color: yellow;
             /* border-bottom: solid 5px var(--hover-color); */
             box-shadow: inset 0 -5px 0 var(--hover-color);
-            animation: rainbow 2s infinite linear;
+            /* animation: rainbow 2s infinite linear; */
 
             h3 {
                 color: var(--hover-color);
