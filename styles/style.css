@@ -11,9 +11,10 @@
     --grey: grey;
 
     --haze: rgb(34, 7, 43);
+    --std-link-hover: rgba(255, 255, 255, 0.274);
 }
 
-h1, h2, h3 {
+h1, h2, h3, .super-title {
     font-family: 'Press Start 2P', system-ui;
 }
 
@@ -94,9 +95,19 @@ header {
     a {
         color: white;
         text-decoration: none;
+        text-shadow: .1em .1em .1em black;
+        padding: .3em;
+        border-radius: .2em;
 
-        &:hover {
-            color: blue;
+        &:hover, &:focus {
+            color: white;
+            background: var(--std-link-hover);
+            text-shadow: none;
+            outline: none;
+        }
+
+        &:focus {
+            outline: 1px solid white;
         }
     }
 }
@@ -112,8 +123,17 @@ section:first-of-type {
 main {
     position: relative;
 
+    /* reduce motion */
     &:has(#animations:checked) {
         section:first-of-type {
+            animation: none;
+
+            h1, h1::before, p {
+                animation: none;
+            }
+        }
+
+        section:nth-of-type(2) ul li {
             animation: none;
 
             h1, h1::before, p {
@@ -130,20 +150,15 @@ section:first-of-type {
     overflow: hidden;
     gap: 1em;
     animation: stars 20s linear infinite;
-    margin: 0 -3000vw;
 
-    --animation-duration: 5s;
-
-    h1 {
+    h1, .super-title {
         font-size: min(max(7vw, 2em), 7em);
         text-transform: uppercase;
         text-align: center;
         align-self: end;
-        overflow: visible;
+        /* overflow: hidden; */
         /* position: absolute; */
         grid-row: 1;
-        white-space: nowrap;
-        
 
         display: flex;
         flex-direction: column;
@@ -151,7 +166,7 @@ section:first-of-type {
 
         color: var(--title);
         animation: 
-            tracking var(--animation-duration) both linear, 
+            tracking 5s both linear, 
             title-hue 15s infinite 5s linear;
 
         /* star shine */
@@ -171,13 +186,38 @@ section:first-of-type {
 
             background-blend-mode: multiply;
             animation: 
-                shine-right 10s linear var(--animation-duration) infinite,
-                scale-rotate 2s step-end var(--animation-duration) infinite;
+                shine-right 10s linear infinite,
+                scale-rotate 2s step-end infinite;
 
             mix-blend-mode: screen;
 
-            /* animation-delay: var(--animation-duration); */
+            animation-delay: 5s;
         }
+
+        /* &::after {
+            content: '';
+
+            scale: 0;
+            position: absolute;
+            width: 2em;
+            aspect-ratio: 1;
+            bottom: -1em;
+            background-image: 
+                radial-gradient(circle at top left, black 40%, white 40%),
+                radial-gradient(circle at top right, black 40%, white 40%),
+                radial-gradient(circle at bottom left, black 40%, white 40%),
+                radial-gradient(circle at bottom right, black 40%, white 40%);
+
+            background-blend-mode: multiply;
+            animation: 
+                shine-right 10s linear infinite,
+                scale-rotate 2s step-end infinite;
+
+            animation-direction: reverse;
+            mix-blend-mode: screen;
+
+            animation-delay: 5s;
+        } */
 
         /* scanline */
         /* &::after {
@@ -248,15 +288,18 @@ section:first-of-type {
         letter-spacing: 1em;
         opacity: 0;
         color: inherit;
-        animation-timing-function: linear;
+    }
+
+    20% {
+        letter-spacing: 1em;
+        opacity: 1;
+        color: inherit;
     }
 
     70% {
         letter-spacing: 0;
-        opacity: 1;
         color: inherit;
         text-shadow: none;
-        
     }
 
     70.1% {
@@ -420,6 +463,22 @@ section:nth-of-type(2) {
         max-width: 30em;
         margin: auto;
     }
+
+    div a {
+        color: white;
+        text-decoration: none;
+
+        &:hover, &:focus {
+            color: white;
+            background: var(--std-link-hover);
+            text-shadow: none;
+            outline: none;
+        }
+
+        &:focus {
+            outline: 1px solid white;
+        }
+    }
 }
 
 section ul {
@@ -462,6 +521,15 @@ section ul {
             }
         }
 
+        /* a:nth-of-type(2) {
+            height: 10%;
+
+            &:hover {
+                color: blue;
+                background: red;
+            }
+        } */
+
         /* hover state */
         &:has(a:hover), &:has(a:focus-visible) {
             --hover-color: yellow;
@@ -472,7 +540,7 @@ section ul {
             h3 {
                 color: var(--hover-color);
                 text-decoration: underline;
-                font-size: 1.2em;
+                /* font-size: 1.2em; */
                 text-shadow: 0 0 1em var(--hover-color);
 
                 &:after {
